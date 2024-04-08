@@ -1,4 +1,4 @@
-import {Box, Typography} from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 export const Page = () => {
   return (
@@ -10,7 +10,7 @@ export const Page = () => {
           or : {" "}
         </Box>
           Do whatever you want
-        </Typography>
+      </Typography>
     </Box>
   );
 };

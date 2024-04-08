@@ -33,6 +33,9 @@ module.exports = {
     "istanbul-ignore-preserve",
   ],
   rules: {
+    "@typescript-eslint/object-curly-spacing": ["warn", "always"],
+    "@typescript-eslint/semi": ["warn", "always"],
+    "@typescript-eslint/indent": ["warn", 2],
     "@typescript-eslint/ban-ts-comment": "off",
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-unnecessary-type-constraint": "off",

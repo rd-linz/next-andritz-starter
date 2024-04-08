@@ -13,19 +13,19 @@ const settings = {
 };
 
 const msalConfig = {
-    auth: {
-        clientId: settings.clientId,
-        authority: `https://login.microsoftonline.com/${settings.tenantId}`,
-        redirectUri: "/",
-        postLogoutRedirectUri: "/",
-    },
-    system: { allowNativeBroker: false },
-    cache: { cacheLocation: "localStorage", storeAuthStateInCookie: true },
+  auth: {
+    clientId: settings.clientId,
+    authority: `https://login.microsoftonline.com/${settings.tenantId}`,
+    redirectUri: "/",
+    postLogoutRedirectUri: "/",
+  },
+  system: { allowNativeBroker: false },
+  cache: { cacheLocation: "localStorage", storeAuthStateInCookie: true },
 };
 
 const loginRequest = { scopes: settings.scopes };
 
 export const auth: AuthSettings = {
-    authConfig: msalConfig,
-    loginRequest: loginRequest
+  authConfig: msalConfig,
+  loginRequest: loginRequest
 };

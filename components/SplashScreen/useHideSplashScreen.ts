@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+
 import { splashScreenId } from "./settings";
 
 export const useHideSplashScreen = () => {
