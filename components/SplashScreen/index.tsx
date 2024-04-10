@@ -1,5 +1,6 @@
-import Image from "next/image";
 import Box from "@mui/material/Box";
+import Image from "next/image";
+
 import { splashScreenId } from "./settings";
 
 export const SplashScreen = () => {
@@ -7,7 +8,7 @@ export const SplashScreen = () => {
     <div id={splashScreenId}>
       <Box sx={{ width: [150, 250] }}>
         <Image
-          src={"/logo_white.svg"}
+          src={"/img/logo_white.svg"}
           alt="logo"
           width={1}
           height={1}
