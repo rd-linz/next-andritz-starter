@@ -70,4 +70,5 @@ async function refreshAccessToken(token: any) {
   }
 }
 
+// @ts-ignore
 export default NextAuth(authOptions);

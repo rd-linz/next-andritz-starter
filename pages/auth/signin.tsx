@@ -6,8 +6,6 @@ import Image from "next/image";
 import { useRouter } from 'next/router';
 import { signIn, useSession } from 'next-auth/react';
 
-import { styles } from "./signin.styles";
-
 export default function SignIn() {
   const { callbackUrl }  = useRouter().query;
   const session = useSession();
@@ -22,8 +20,8 @@ export default function SignIn() {
 
   if (session.status === 'unauthenticated') {
     return (
-      <Box sx={styles.container}> 
-        <Box sx={styles.logoContainer}>
+      <Box className="loginContainer"> 
+        <Box className="loginLogoContainer">
           <Image
             src={"/img/logo_white.svg"}
             alt="logo"
@@ -36,7 +34,7 @@ export default function SignIn() {
             }}
           />
         </Box>
-        <Typography sx={styles.text}>Redirecting to login... </Typography>
+        <Typography className="loginText">Redirecting to login... </Typography>
       </Box>
     );
   }

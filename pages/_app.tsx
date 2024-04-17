@@ -23,7 +23,7 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
             {application.title}
           </title>
         </Head>
-        <LayoutProvider  {...layout} session={session} >
+        <LayoutProvider  {...layout}>
           <Component {...pageProps} />
           <ToastContainer position="bottom-right" />
         </LayoutProvider>

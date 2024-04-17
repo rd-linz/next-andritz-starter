@@ -9,7 +9,7 @@ export const Page = () => {
       <Box>
         <UserInfoMSAL
           disposition="left"
-          user={"me"}
+          username={"me"}
         />
       </Box>
     </Box>
