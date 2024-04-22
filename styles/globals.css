@@ -2,6 +2,7 @@
   --font-family: "Roboto", "Segoe UI", "GeezaPro", "DejaVu Serif", "sans-serif",
     "-apple-system", "BlinkMacSystemFont";
   --toastify-font-family: var(--font-family);
+  --andritz-blue: #0075be;
 }
 
 * {
@@ -37,7 +38,7 @@ a {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #0075be;
+  background-color: var(--andritz-blue);
 }
 
 .loginLogoContainer {
