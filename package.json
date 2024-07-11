@@ -11,13 +11,13 @@
   },
   "dependencies": {
     "@andritz/hwf2": "^0.0.0-alpha.36",
+    "@mui/icons-material": "^5.16.0",
+    "@mui/lab": "^5.0.0-alpha.171",
+    "@mui/material": "^5.16.0",
     "@types/node": "20.11.25",
-    "@types/react": "^18.2.37",
     "cross-env": "^7.0.3",
     "next": "^14.1.3",
     "next-auth": "^4.24.7",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
     "react-toastify": "^10.0.4",
     "swr": "^2.1.1",
     "typescript": "4.9.5"
