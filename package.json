@@ -10,7 +10,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@andritz/hwf2": "^0.0.0-alpha.35",
+    "@andritz/hwf2": "^0.0.0-alpha.36",
     "@types/node": "20.11.25",
     "@types/react": "^18.2.37",
     "cross-env": "^7.0.3",
