@@ -1,0 +1,9 @@
+{
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "rvest.vs-code-prettier-eslint",
+    "stackbreak.comment-divider",
+    "stkb.rewrap",
+    "gruntfuggly.todo-tree"
+  ]
+}
