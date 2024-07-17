@@ -1,55 +1,86 @@
-import React from "react";
-
 import { LayoutProviderProps } from "@andritz/hwf2";
 import Router from "next/router";
-
-const HomeI = () => React.createElement("span", null, "🏠");
-const ProjectI = () => React.createElement("span", null, "🚀");
-const TestI = () => React.createElement("span", null, "👽");
-const TestII = () => React.createElement("span", null, "👨‍🚀");
-const SettingsI = () => React.createElement("span", null, "⚙️");
+import { VscPaintcan } from "react-icons/vsc";
+import { VscHome } from "react-icons/vsc";
+import { VscLayoutSidebarLeftOff } from "react-icons/vsc";
+import { VscLayoutSidebarRightOff } from "react-icons/vsc";
+import { VscLayoutPanelOff } from "react-icons/vsc";
+import { VscCircleSlash } from "react-icons/vsc";
 
 export const layout: LayoutProviderProps = {
   menuItemsData: [
     {
-      text: "Hello World",
-      icon: HomeI,
+      text: "Home",
+      icon: VscHome,
+      iconProps: {
+        sx: {
+          fontSize: "1.5rem",
+        },
+      },
       onClick: () => Router.push("/"),
-      context: ["sidebar", "topbar", "accountMenu"],
-    },
-    {
-      text: "Another Route",
-      icon: ProjectI,
-      onClick: () => Router.push("/another-route"),
       context: ["sidebar", "topbar"],
     },
     {
-      text: "Drawer Route",
-      icon: TestI,
-      onClick: () => Router.push("/another-route"),
+      text: "Styles",
+      icon: VscPaintcan,
+      iconProps: {
+        sx: {
+          fontSize: "1.5rem",
+        },
+      },
+      onClick: () => Router.push("/styles"),
+      context: ["sidebar", "topbar"],
+    },
+    {
+      text: "Sidebar Item",
+      icon: VscLayoutSidebarLeftOff,
+      iconProps: {
+        sx: {
+          fontSize: "1.5rem",
+        },
+      },
+      onClick: () => Router.push("/sidebar-route"),
       context: ["sidebar"],
     },
     {
-      text: "Topbar Route",
-      icon: TestII,
-      onClick: () => Router.push("/another-route"),
+      text: "Topbar Item",
+      icon: VscLayoutPanelOff,
+      iconProps: {
+        sx: {
+          transform: "rotate(180deg) translateY(6px)",
+          fontSize: "1.5rem",
+        },
+      },
+      onClick: () => Router.push("/topbar-route"),
       context: ["topbar"],
     },
     {
-      text: "Disabled Route",
-      icon: TestII,
-      onClick: () => Router.push("/another-route"),
+      text: "Account Menu Item",
+      icon: VscLayoutSidebarRightOff,
+      iconProps: {
+        sx: {
+          fontSize: "1.5rem",
+        },
+      },
+      onClick: () => Router.push("/account-menu-route"),
+      context: ["accountMenu"],
+    },
+    {
+      text: "Disabled Item",
+      icon: VscCircleSlash,
+      iconProps: {
+        sx: {
+          fontSize: "1.5rem",
+        },
+      },
+      onClick: () => Router.push("/"),
       context: ["topbar", "sidebar", "accountMenu"],
       disabled: true,
     },
-    {
-      text: "Settings",
-      icon: SettingsI,
-      onClick: () => Router.push("/settings"),
-      context: ["accountMenu"],
-    },
   ],
-  baseSideBarWidth: 240,
+  sidebarWidth: 300,
   logoSrc: "/img/logo.svg",
-  footer: { text: `Andritz Hydro © ${new Date().getFullYear()}` },
+  footer: {
+    text: `Andritz Hydro © ${new Date().getFullYear()}`,
+  },
 };
