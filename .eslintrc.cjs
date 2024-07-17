@@ -44,7 +44,7 @@ module.exports = {
       { varsIgnorePattern: "^_", argsIgnorePattern: "^_" },
     ],
     "@typescript-eslint/no-unnecessary-type-constraint": "off",
-    "mui-path-imports/mui-path-imports": "warn",
+    // "mui-path-imports/mui-path-imports": "warn",
     quotes: ["warn", "double"],
     // https://medium.com/@diballesteros/how-to-quickly-configure-eslint-for-import-sorting-3a4017bd4853
     // https://dev.to/otamnitram/sorting-your-imports-correctly-in-react-213m
