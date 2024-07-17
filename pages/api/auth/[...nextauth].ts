@@ -18,7 +18,7 @@ export const authOptions = {
   ],
   secret: process.env.NEXTAUTH_SECRET, 
   pages: {
-    signIn: '/auth/signin/',
+    signIn: "/auth/signin/",
   },
   callbacks: {
     async jwt({ token, account, profile }: { token: any, account: any, profile: any }) {
@@ -49,7 +49,7 @@ async function refreshAccessToken(token: any) {
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
       },
-      body: `grant_type=refresh_token`
+      body: "grant_type=refresh_token"
       + `&client_secret=${process.env.AZURE_AD_CLIENT_SECRET}`
       + `&refresh_token=${token.refreshToken as string}`
       + `&client_id=${process.env.AZURE_AD_CLIENT_ID}`
