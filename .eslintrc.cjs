@@ -1,4 +1,4 @@
-const externalBefore = ["react", "lodash", "prop-types", "path"];
+const externalBefore = ["react", "lodash", "@mui", "prop-types", "path"];
 
 const aliasFolders = [
   "apis",
