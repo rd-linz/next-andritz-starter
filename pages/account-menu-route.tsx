@@ -1,10 +1,6 @@
-import { BaseRouteComponent } from "./sidebar-route";
+import { BaseRouteComponent } from "pages-components/example-routes";
 
-export const Page = () => {
-  return (
-    <BaseRouteComponent
-      location="account menu"
-      definition={`{
+const definition = `const menuItem = {
   text: "Account Menu Item",
   icon: VscLayoutSidebarRightOff,
   iconProps: {
@@ -14,9 +10,10 @@ export const Page = () => {
   },
   onClick: () => Router.push("/account-menu-route"),
   context: ["accountmenu"],
-}`}
-    />
-  );
+}`;
+
+export const Page = () => {
+  return <BaseRouteComponent location="account menu" definition={definition} />;
 };
 
 export default Page;

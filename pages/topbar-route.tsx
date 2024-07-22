@@ -1,10 +1,6 @@
-import { BaseRouteComponent } from "./sidebar-route";
+import { BaseRouteComponent } from "pages-components/example-routes";
 
-export const Page = () => {
-  return (
-    <BaseRouteComponent
-      location="topbar"
-      definition={`{
+const definition = `const menuItem = {
   text: "Topbar Item",
   icon: VscLayoutPanelOff,
   iconProps: {
@@ -15,9 +11,10 @@ export const Page = () => {
   },
   onClick: () => Router.push("/topbar-route"),
   context: ["topbar"],
-}`}
-    />
-  );
+}`;
+
+export const Page = () => {
+  return <BaseRouteComponent location="topbar" definition={definition} />;
 };
 
 export default Page;
