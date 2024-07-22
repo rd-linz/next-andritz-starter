@@ -6,6 +6,7 @@ import { VscLayoutSidebarLeftOff } from "react-icons/vsc";
 import { VscLayoutSidebarRightOff } from "react-icons/vsc";
 import { VscLayoutPanelOff } from "react-icons/vsc";
 import { VscCircleSlash } from "react-icons/vsc";
+import { VscTable } from "react-icons/vsc";
 
 export const layout: LayoutProviderProps = {
   menuItemsData: [
@@ -53,6 +54,17 @@ export const layout: LayoutProviderProps = {
       },
       onClick: () => Router.push("/topbar-route"),
       context: ["topbar"],
+    },
+    {
+      text: "Datagrid",
+      icon: VscTable,
+      iconProps: {
+        sx: {
+          fontSize: "1.5rem",
+        },
+      },
+      onClick: () => Router.push("/datagrid"),
+      context: ["sidebar", "topbar"],
     },
     {
       text: "Account Menu Item",
