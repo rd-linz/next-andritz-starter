@@ -10,7 +10,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@andritz/hwf2": "^0.0.0-alpha.39",
+    "@andritz/hwf2": "^0.0.0-alpha.40",
     "@mui/icons-material": "^5.16.0",
     "@mui/lab": "^5.0.0-alpha.171",
     "@mui/material": "^5.16.0",
