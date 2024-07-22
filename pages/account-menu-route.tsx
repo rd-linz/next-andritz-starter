@@ -13,7 +13,7 @@ export const Page = () => {
     },
   },
   onClick: () => Router.push("/account-menu-route"),
-  context: ["accountMenu"],
+  context: ["accountmenu"],
 }`}
     />
   );

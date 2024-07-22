@@ -63,7 +63,7 @@ export const layout: LayoutProviderProps = {
         },
       },
       onClick: () => Router.push("/account-menu-route"),
-      context: ["accountMenu"],
+      context: ["accountmenu"],
     },
     {
       text: "Disabled Item",
@@ -74,7 +74,7 @@ export const layout: LayoutProviderProps = {
         },
       },
       onClick: () => Router.push("/"),
-      context: ["topbar", "sidebar", "accountMenu"],
+      context: ["topbar", "sidebar", "accountmenu"],
       disabled: true,
     },
   ],
