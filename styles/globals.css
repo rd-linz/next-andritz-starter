@@ -14,7 +14,8 @@
 html,
 body {
   height: 100%;
-  overflow-x: hidden;
+  width: 100%;
+  overflow: hidden;
   font-family: var(--font-family);
 }
 
@@ -26,6 +27,7 @@ a {
 #__next {
   height: 100%;
   display: flex;
+  flex-direction: column;
 }
 
 .loginContainer {
