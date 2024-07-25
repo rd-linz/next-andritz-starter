@@ -2,11 +2,12 @@
 export default `
 body {
   display: block;
+  overflow: hidden;
 }
 
 #splash-screen {
     position: fixed;
-    z-index: 1700;
+    z-index: 9999;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
