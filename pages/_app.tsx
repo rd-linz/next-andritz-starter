@@ -1,8 +1,8 @@
 import "@/styles/globals.css";
 import "react-toastify/dist/ReactToastify.css";
 
-import { LayoutProvider, useThemeSettings } from "@andritz/hwf2";
-import { ThemeProvider } from "@mui/material/styles";
+import { Layout, useThemeController } from "@andritz/hwf2";
+import { ThemeProvider } from "@mui/material";
 import { AppProps } from "next/app";
 import Head from "next/head";
 import { SessionProvider } from "next-auth/react";
@@ -18,18 +18,19 @@ export default function App({
   pageProps: { session, ...pageProps },
 }: AppProps) {
   useHideSplashScreen();
-  const themeSettings = useThemeSettings();
+
+  const themeController = useThemeController(layout.themeSettings);
 
   return (
     <SessionProvider session={session}>
-      <ThemeProvider theme={themeSettings.theme}>
+      <ThemeProvider theme={themeController.theme}>
         <Head>
           <title>{application.title}</title>
         </Head>
-        <LayoutProvider {...layout} themeSettings={themeSettings}>
+        <Layout {...layout} themeController={themeController}>
           <Component {...pageProps} />
           <ToastContainer position="bottom-right" />
-        </LayoutProvider>
+        </Layout>
       </ThemeProvider>
     </SessionProvider>
   );

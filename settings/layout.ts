@@ -1,4 +1,8 @@
-import { LayoutProviderProps } from "@andritz/hwf2";
+import {
+  LayoutSettings,
+  MenuItemCallbackArgs,
+  MenuItemFactoryData,
+} from "@andritz/hwf2";
 import Router from "next/router";
 import { VscPaintcan } from "react-icons/vsc";
 import { VscHome } from "react-icons/vsc";
@@ -7,8 +11,38 @@ import { VscLayoutSidebarRightOff } from "react-icons/vsc";
 import { VscLayoutPanelOff } from "react-icons/vsc";
 import { VscCircleSlash } from "react-icons/vsc";
 import { VscTable } from "react-icons/vsc";
+import { VscWholeWord } from "react-icons/vsc";
 
-export const layout: LayoutProviderProps = {
+const topbarWhenSidebarCollapsed = (): Partial<MenuItemFactoryData> => {
+  const visible = ({ context, layoutController }: MenuItemCallbackArgs) => {
+    if (context === "topbar") {
+      const sidebarController = layoutController.sidebarController;
+      return !sidebarController.sidebarExpanded;
+    } else {
+      return true;
+    }
+  };
+
+  const position = "start";
+  const context = ["topbar", "sidebar"];
+
+  return { visible, position, context } as Partial<MenuItemFactoryData>;
+};
+
+export const layout: LayoutSettings = {
+  sidebarWidth: 300,
+  logoSrc: "/img/logo.svg",
+  themeSettings: {
+    defaultTheme: "light",
+    preferSystemDefault: true,
+  },
+  titleSettings: {
+    startTitle: "NextJS Andritz Starter",
+    transitionDuration: 100,
+  },
+  footerSettings: {
+    text: `Andritz Hydro © ${new Date().getFullYear()}`,
+  },
   menuItemsData: [
     {
       text: "Home",
@@ -19,7 +53,7 @@ export const layout: LayoutProviderProps = {
         },
       },
       onClick: () => Router.push("/"),
-      context: ["sidebar", "topbar"],
+      ...topbarWhenSidebarCollapsed(),
     },
     {
       text: "Styles",
@@ -30,7 +64,7 @@ export const layout: LayoutProviderProps = {
         },
       },
       onClick: () => Router.push("/styles"),
-      context: ["sidebar", "topbar"],
+      ...topbarWhenSidebarCollapsed(),
     },
     {
       text: "Sidebar Item",
@@ -53,7 +87,19 @@ export const layout: LayoutProviderProps = {
         },
       },
       onClick: () => Router.push("/topbar-route"),
+      ...topbarWhenSidebarCollapsed(),
       context: ["topbar"],
+    },
+    {
+      text: "Custom Title",
+      icon: VscWholeWord,
+      iconProps: {
+        sx: {
+          fontSize: "1.5rem",
+        },
+      },
+      onClick: () => Router.push("/app-title"),
+      ...topbarWhenSidebarCollapsed,
     },
     {
       text: "Datagrid",
@@ -64,7 +110,7 @@ export const layout: LayoutProviderProps = {
         },
       },
       onClick: () => Router.push("/datagrid"),
-      context: ["sidebar", "topbar"],
+      ...topbarWhenSidebarCollapsed(),
     },
     {
       text: "Account Menu Item",
@@ -86,13 +132,9 @@ export const layout: LayoutProviderProps = {
         },
       },
       onClick: () => Router.push("/"),
-      context: ["topbar", "sidebar", "accountmenu"],
       disabled: true,
+      ...topbarWhenSidebarCollapsed(),
+      context: ["topbar", "sidebar", "accountmenu"],
     },
   ],
-  sidebarWidth: 300,
-  logoSrc: "/img/logo.svg",
-  footer: {
-    text: `Andritz Hydro © ${new Date().getFullYear()}`,
-  },
 };
