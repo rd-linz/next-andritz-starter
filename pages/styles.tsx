@@ -14,6 +14,7 @@ const styles = {
     height: "100%",
     flex: 1,
     gap: 2,
+    pb: 2
   },
 };
 
