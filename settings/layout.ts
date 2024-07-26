@@ -1,8 +1,4 @@
-import {
-  LayoutSettings,
-  MenuItemCallbackArgs,
-  MenuItemFactoryData,
-} from "@andritz/hwf2";
+import { LayoutSettings, visibleWhenTopbarCollapsed } from "@andritz/hwf2";
 import Router from "next/router";
 import { VscPaintcan } from "react-icons/vsc";
 import { VscHome } from "react-icons/vsc";
@@ -13,23 +9,7 @@ import { VscCircleSlash } from "react-icons/vsc";
 import { VscTable } from "react-icons/vsc";
 import { VscWholeWord } from "react-icons/vsc";
 
-const topbarWhenSidebarCollapsed = (): Partial<MenuItemFactoryData> => {
-  const visible = ({ context, layoutController }: MenuItemCallbackArgs) => {
-    if (context === "topbar") {
-      const sidebarController = layoutController.sidebarController;
-      return !sidebarController.sidebarExpanded;
-    } else {
-      return true;
-    }
-  };
-
-  const position = "start";
-  const context = ["topbar", "sidebar"];
-
-  return { visible, position, context } as Partial<MenuItemFactoryData>;
-};
-
-export const layout: LayoutSettings = {
+const baseSettings: Partial<LayoutSettings> = {
   sidebarWidth: 300,
   logoSrc: "/img/logo.svg",
   themeSettings: {
@@ -43,6 +23,10 @@ export const layout: LayoutSettings = {
   footerSettings: {
     text: `Andritz Hydro © ${new Date().getFullYear()}`,
   },
+};
+
+export const layout: LayoutSettings = {
+  ...baseSettings,
   menuItemsData: [
     {
       text: "Home",
@@ -53,7 +37,7 @@ export const layout: LayoutSettings = {
         },
       },
       onClick: () => Router.push("/"),
-      ...topbarWhenSidebarCollapsed(),
+      ...visibleWhenTopbarCollapsed(),
     },
     {
       text: "Styles",
@@ -64,7 +48,7 @@ export const layout: LayoutSettings = {
         },
       },
       onClick: () => Router.push("/styles"),
-      ...topbarWhenSidebarCollapsed(),
+      ...visibleWhenTopbarCollapsed(),
     },
     {
       text: "Sidebar Item",
@@ -87,7 +71,7 @@ export const layout: LayoutSettings = {
         },
       },
       onClick: () => Router.push("/topbar-route"),
-      ...topbarWhenSidebarCollapsed(),
+      ...visibleWhenTopbarCollapsed(),
       context: ["topbar"],
     },
     {
@@ -99,7 +83,7 @@ export const layout: LayoutSettings = {
         },
       },
       onClick: () => Router.push("/app-title"),
-      ...topbarWhenSidebarCollapsed,
+      ...visibleWhenTopbarCollapsed,
     },
     {
       text: "Datagrid",
@@ -110,7 +94,7 @@ export const layout: LayoutSettings = {
         },
       },
       onClick: () => Router.push("/datagrid"),
-      ...topbarWhenSidebarCollapsed(),
+      ...visibleWhenTopbarCollapsed(),
     },
     {
       text: "Account Menu Item",
@@ -133,7 +117,7 @@ export const layout: LayoutSettings = {
       },
       onClick: () => Router.push("/"),
       disabled: true,
-      ...topbarWhenSidebarCollapsed(),
+      ...visibleWhenTopbarCollapsed(),
       context: ["topbar", "sidebar", "accountmenu"],
     },
   ],
