@@ -1,5 +1,5 @@
 import { application } from "./application";
-import {auth} from "./auth";
+import { auth } from "./auth";
 import { layout } from "./layout";
 import { AppSettings } from "./types";
 
