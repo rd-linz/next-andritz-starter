@@ -1,4 +1,4 @@
-import { LayoutProviderProps } from '@andritz/hwf2';
+import { LayoutSettings } from "@andritz/hwf2";
 
 export type ApplicationSettings = {
   title: string;
@@ -29,5 +29,5 @@ export type AuthSettings = {
 export type AppSettings = {
   application: ApplicationSettings;
   auth: AuthSettings;
-  layout: LayoutProviderProps;
+  layout: LayoutSettings;
 };
