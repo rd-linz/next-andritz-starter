@@ -6,6 +6,7 @@ import {
   AppCustomProps,
   useThemeController,
   appGetInitialProps,
+  useHideSplashScreen,
 } from "@andritz/hwf2";
 import { ThemeProvider } from "@mui/material";
 import { AppProps } from "next/app";
@@ -13,7 +14,6 @@ import Head from "next/head";
 import { SessionProvider } from "next-auth/react";
 import { ToastContainer } from "react-toastify";
 
-import { useHideSplashScreen } from "@/components/SplashScreen";
 import { settings } from "@/settings";
 
 const { application, layout } = settings;

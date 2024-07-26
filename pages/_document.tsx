@@ -1,7 +1,8 @@
+import {
+  SplashScreen,
+} from "@andritz/hwf2";
 import { Html, Head, Main, NextScript } from "next/document";
 
-import { SplashScreen } from "@/components/SplashScreen";
-import splashScreenStyle from "@/components/SplashScreen/style";
 
 export default function Document() {
   return (
@@ -13,7 +14,7 @@ export default function Document() {
           href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;1,300&display=swap"
           rel="stylesheet"
         />
-        <style>{splashScreenStyle}</style>
+        <style>{SplashScreen.style}</style>
       </Head>
       <body>
         <SplashScreen />
