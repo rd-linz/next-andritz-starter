@@ -1,10 +1,11 @@
 import {
   SplashScreen,
+  documentGetInitialProps,
+  DocumentCustomProps,
 } from "@andritz/hwf2";
 import { Html, Head, Main, NextScript } from "next/document";
 
-
-export default function Document() {
+export default function Document({ darkMode }: DocumentCustomProps) {
   return (
     <Html lang="en">
       <Head>
@@ -17,10 +18,12 @@ export default function Document() {
         <style>{SplashScreen.style}</style>
       </Head>
       <body>
-        <SplashScreen />
+        <SplashScreen darkMode={darkMode} />
         <Main />
         <NextScript />
       </body>
     </Html>
   );
 }
+
+Document.getInitialProps = documentGetInitialProps;
