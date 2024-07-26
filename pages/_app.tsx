@@ -1,7 +1,12 @@
 import "@/styles/globals.css";
 import "react-toastify/dist/ReactToastify.css";
 
-import { Layout, useThemeController } from "@andritz/hwf2";
+import {
+  Layout,
+  AppCustomProps,
+  useThemeController,
+  appGetInitialProps,
+} from "@andritz/hwf2";
 import { ThemeProvider } from "@mui/material";
 import { AppProps } from "next/app";
 import Head from "next/head";
@@ -13,13 +18,17 @@ import { settings } from "@/settings";
 
 const { application, layout } = settings;
 
-export default function App({
+const App = ({
   Component,
   pageProps: { session, ...pageProps },
-}: AppProps) {
+  defaultTheme,
+  preferSystemDefault,
+}: AppProps & AppCustomProps) => {
   useHideSplashScreen();
 
-  const themeController = useThemeController(layout.themeSettings);
+  const themeArgs = { defaultTheme, preferSystemDefault };
+  const themeControllerArgs = { ...layout.themeSettings, ...themeArgs };
+  const themeController = useThemeController(themeControllerArgs);
 
   return (
     <SessionProvider session={session}>
@@ -34,4 +43,8 @@ export default function App({
       </ThemeProvider>
     </SessionProvider>
   );
-}
+};
+
+App.getInitialProps = appGetInitialProps;
+
+export default App;
