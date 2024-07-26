@@ -18,12 +18,12 @@ import { settings } from "@/settings";
 
 const { application, layout } = settings;
 
-const App = ({
+export default function App({
   Component,
   pageProps: { session, ...pageProps },
   defaultTheme,
   preferSystemDefault,
-}: AppProps & AppCustomProps) => {
+}: AppProps & AppCustomProps) {
   useHideSplashScreen();
 
   const themeArgs = { defaultTheme, preferSystemDefault };
@@ -43,8 +43,6 @@ const App = ({
       </ThemeProvider>
     </SessionProvider>
   );
-};
+}
 
 App.getInitialProps = appGetInitialProps;
-
-export default App;
