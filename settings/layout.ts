@@ -25,43 +25,57 @@ const baseSettings: Partial<LayoutSettings> = {
   },
 };
 
+const commonIconProps = {
+  sx: {
+    fontSize: "1.5rem",
+  },
+};
+
 export const layout: LayoutSettings = {
   ...baseSettings,
   menuItemsData: [
     {
       text: "Home",
       icon: VscHome,
-      iconProps: {
-        sx: {
-          fontSize: "1.5rem",
-        },
-      },
+      iconProps: commonIconProps,
       onClick: () => Router.push("/"),
       ...visibleWhenTopbarCollapsed(),
+      divider: (args) => (args?.context === "topbar" ? "after" : undefined),
     },
     {
-      text: "Styles",
-      icon: VscPaintcan,
-      iconProps: {
-        sx: {
-          fontSize: "1.5rem",
-        },
-      },
-      onClick: () => Router.push("/styles"),
+      group: "Examples",
+      text: "Datagrid",
+      icon: VscTable,
+      iconProps: commonIconProps,
+      onClick: () => Router.push("/datagrid"),
       ...visibleWhenTopbarCollapsed(),
     },
     {
+      group: "Examples",
+      text: "Custom Title",
+      icon: VscWholeWord,
+      iconProps: commonIconProps,
+      onClick: () => Router.push("/app-title"),
+      ...visibleWhenTopbarCollapsed(),
+    },
+    {
+      group: "Menu Items",
+      text: "Account Menu Item",
+      icon: VscLayoutSidebarRightOff,
+      iconProps: commonIconProps,
+      onClick: () => Router.push("/account-menu-route"),
+      context: ["accountmenu"],
+    },
+    {
+      group: "Menu Items",
       text: "Sidebar Item",
       icon: VscLayoutSidebarLeftOff,
-      iconProps: {
-        sx: {
-          fontSize: "1.5rem",
-        },
-      },
+      iconProps: commonIconProps,
       onClick: () => Router.push("/sidebar-route"),
       context: ["sidebar"],
     },
     {
+      group: "Menu Items",
       text: "Topbar Item",
       icon: VscLayoutPanelOff,
       iconProps: {
@@ -75,50 +89,22 @@ export const layout: LayoutSettings = {
       context: ["topbar"],
     },
     {
-      text: "Custom Title",
-      icon: VscWholeWord,
-      iconProps: {
-        sx: {
-          fontSize: "1.5rem",
-        },
-      },
-      onClick: () => Router.push("/app-title"),
-      ...visibleWhenTopbarCollapsed,
-    },
-    {
-      text: "Datagrid",
-      icon: VscTable,
-      iconProps: {
-        sx: {
-          fontSize: "1.5rem",
-        },
-      },
-      onClick: () => Router.push("/datagrid"),
-      ...visibleWhenTopbarCollapsed(),
-    },
-    {
-      text: "Account Menu Item",
-      icon: VscLayoutSidebarRightOff,
-      iconProps: {
-        sx: {
-          fontSize: "1.5rem",
-        },
-      },
-      onClick: () => Router.push("/account-menu-route"),
-      context: ["accountmenu"],
-    },
-    {
+      group: "Menu Items",
       text: "Disabled Item",
       icon: VscCircleSlash,
-      iconProps: {
-        sx: {
-          fontSize: "1.5rem",
-        },
-      },
+      iconProps: commonIconProps,
       onClick: () => Router.push("/"),
       disabled: true,
       ...visibleWhenTopbarCollapsed(),
       context: ["topbar", "sidebar", "accountmenu"],
+    },
+    {
+      group: "Auxiliar",
+      text: "Styles",
+      icon: VscPaintcan,
+      iconProps: commonIconProps,
+      onClick: () => Router.push("/styles"),
+      ...visibleWhenTopbarCollapsed(),
     },
   ],
 };
