@@ -1,74 +1,98 @@
 import NextAuth from "next-auth";
 import AzureADProvider from "next-auth/providers/azure-ad";
 
+import { getAccessToken } from "../access-token";
+
+const settings = {
+  scope: process.env.AZURE_MSAL_SCOPE || "openid User.Read offline_access",
+  clientId: process.env.AZURE_AD_CLIENT_ID || "",
+  clientSecret: process.env.AZURE_AD_CLIENT_SECRET || "",
+  tenantId: process.env.AZURE_AD_TENANT_ID,
+  nextAuthSecret: process.env.NEXTAUTH_SECRET,
+};
+
+type JWTCallbackArgs = { token: any; account: any; profile?: any };
+type SessionCallbackArgs = { session: any; token: any };
+
 export const authOptions = {
   providers: [
     AzureADProvider({
       id: "azure-ad",
-      name:"AzureAD",
-      clientId: process.env.AZURE_AD_CLIENT_ID || "",
-      clientSecret: process.env.AZURE_AD_CLIENT_SECRET || "",
-      tenantId: process.env.AZURE_AD_TENANT_ID,
-      authorization: {
-        params: {
-          scope: "openid User.Read Presence.Read.All offline_access",
-        },
-      },
-    })
+      name: "AzureAD",
+      clientId: settings.clientId,
+      clientSecret: settings.clientSecret,
+      tenantId: settings.tenantId,
+      authorization: { params: { scope: settings.scope } },
+    }),
   ],
-  secret: process.env.NEXTAUTH_SECRET, 
+  secret: settings.nextAuthSecret,
   pages: {
     signIn: "/auth/signin/",
   },
   callbacks: {
-    async jwt({ token, account, profile }: { token: any, account: any, profile: any }) {
+    /**
+     * JWT callback to handle token updates.
+     *
+     * @param {Object} params - The parameters for the callback.
+     * @param {Object} params.token - The current token.
+     * @param {Object} [params.account] - The account information.
+     * @param {Object} [params.profile] - The profile information.
+     * @returns {Promise<Object>} The updated token.
+     */
+    async jwt({ token, account, profile }: JWTCallbackArgs) {
       if (account) {
-        token.accessToken = account.access_token;
-        token.refreshToken = account.refresh_token;
-        token.expiresAt = account.expires_at * 1000;
-        token.id = profile.id;
-      }
-      if (Date.now() < token.expiresAt) {
-        return token;
-      }
-      const returnT = await refreshAccessToken(token);
-      return returnT;
-    },
-    async session({ session, token }: { session: any , token: any }) {
-      session.accessToken = token.accessToken;
-      return session;
-    }
-  }
-};
-
-async function refreshAccessToken(token: any) {
-  try {
-    const url = `https://login.microsoftonline.com/${process.env.AZURE_AD_TENANT_ID}/oauth2/v2.0/token`;
-    return await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      body: "grant_type=refresh_token"
-      + `&client_secret=${process.env.AZURE_AD_CLIENT_SECRET}`
-      + `&refresh_token=${token.refreshToken as string}`
-      + `&client_id=${process.env.AZURE_AD_CLIENT_ID}`
-    }).then(res => res.json())
-      .then(res => {
         return {
           ...token,
-          accessToken: res.access_token,
-          expiresAt: Date.now() + res.expires_in * 1000,
-          refreshToken: res.refresh_token ?? token.refreshToken, // Fall backto old refresh token
+          accessToken: account.access_token,
+          expiresAt: account.expires_at,
+          refreshToken: account.refresh_token,
+          id: profile.id,
         };
-      });
-  } catch (error) {
-    return {
-      ...token,
-      error: "RefreshAccessTokenError",
-    };
-  }
-}
+      } else if (Date.now() < token.expiresAt * 1000) {
+        return token;
+      } else {
+        if (!token.refreshToken) {
+          console.log("Current settings >>>", settings);
+          throw new TypeError("Missing refresh_token");
+        }
+
+        try {
+          const newTokens = await getAccessToken(
+            token.refreshToken,
+            settings.scope
+          );
+
+          token.accessToken = newTokens.accessToken;
+          token.expiresAt = Math.floor(Date.now() / 1000 + newTokens.expiresIn);
+          // Some providers only issue refresh tokens once, so preserve if we did not get a new one
+          if (newTokens.refreshToken) {
+            token.refreshToken = newTokens.refreshToken;
+          }
+          return token;
+        } catch (error) {
+          console.error("Error refreshing accessToken", error);
+          console.log("Current settings >>>", settings);
+          // If we fail to refresh the token, return an error so we can handle it on the page
+          token.error = "RefreshTokenError";
+          return token;
+        }
+      }
+    },
+    /**
+     * Session callback to handle session updates.
+     *
+     * @param {Object} params - The parameters for the callback.
+     * @param {Object} params.session - The current session.
+     * @param {Object} params.token - The current token.
+     * @returns {Promise<Object>} The updated session.
+     */
+    async session({ session, token }: SessionCallbackArgs) {
+      session.accessToken = token.accessToken;
+      session.refreshToken = token.refreshToken;
+      return session;
+    },
+  },
+};
 
 // @ts-ignore
 export default NextAuth(authOptions);
