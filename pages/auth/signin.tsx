@@ -1,43 +1,56 @@
 import { useEffect } from "react";
 
+import { useHideSplashScreen } from "@andritz/hwf2";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Image from "next/image";
 import { useRouter } from "next/router";
 import { signIn, useSession } from "next-auth/react";
 
+const styles = {
+  container: {
+    position: "fixed",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "background.paper",
+    zIndex: 3000,
+  },
+  text: {
+    color: "text.primary",
+    fontSize: "1.5em",
+  },
+};
+
+const statusMessages: Record<string, any> = {
+  unauthenticated: "Checking your credentials...",
+  loading: "Loading...",
+};
+
 export default function SignIn() {
-  const { callbackUrl }  = useRouter().query;
+  const { callbackUrl } = useRouter().query;
   const session = useSession();
-  
+  useHideSplashScreen();
+
   useEffect(() => {
-    if(session.status === "unauthenticated" && callbackUrl) {
+    if (session.status === "unauthenticated" && callbackUrl) {
       signIn("azure-ad", { callbackUrl: callbackUrl as string });
-    }else{
-      console.log("Session was found, signin", session);
-    } 
-  }, [session, callbackUrl]);
+    }
+  }, [session.status, callbackUrl]);
 
-  if (session.status === "unauthenticated") {
-    return (
-      <Box className="loginContainer"> 
-        <Box className="loginLogoContainer">
-          <Image
-            src={"/img/logo_white.svg"}
-            alt="logo"
-            width={1}
-            height={1}
-            style={{
-              position: "relative",
-              height: "100%",
-              width: "100%",
-            }}
-          />
-        </Box>
-        <Typography className="loginText">Redirecting to login... </Typography>
-      </Box>
-    );
-  }
+  const statusMessage = statusMessages[session?.status] || "Authenticating...";
 
-  return null;
+  return <AuthFeedback message={statusMessage} />;
 }
+
+const AuthFeedback = ({ message }: { message?: string }) => {
+  return (
+    <Box sx={styles.container}>
+      <Typography sx={styles.text}>{message}</Typography>
+    </Box>
+  );
+};
