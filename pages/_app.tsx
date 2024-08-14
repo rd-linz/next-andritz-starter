@@ -7,6 +7,7 @@ import {
   useThemeController,
   appGetInitialProps,
   useHideSplashScreen,
+  AccessTokenProvider,
 } from "@andritz/hwf2";
 import { ThemeProvider } from "@mui/material";
 import { AppProps } from "next/app";
@@ -32,15 +33,17 @@ export default function App({
 
   return (
     <SessionProvider session={session}>
-      <ThemeProvider theme={themeController.theme}>
-        <Head>
-          <title>{application.title}</title>
-        </Head>
-        <Layout {...layout} themeController={themeController}>
-          <Component {...pageProps} />
-          <ToastContainer position="bottom-right" />
-        </Layout>
-      </ThemeProvider>
+      <AccessTokenProvider>
+        <ThemeProvider theme={themeController.theme}>
+          <Head>
+            <title>{application.title}</title>
+          </Head>
+          <Layout {...layout} themeController={themeController}>
+            <Component {...pageProps} />
+            <ToastContainer position="bottom-right" />
+          </Layout>
+        </ThemeProvider>
+      </AccessTokenProvider>
     </SessionProvider>
   );
 }
