@@ -1,37 +1,4 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { DefaultSession } from "next-auth";
-
-/**
- * Extends the default session interface to include access and refresh tokens.
- *
- * @module next-auth
- */
-declare module "next-auth" {
-  /**
-   * Extended session interface.
-   * @interface Session
-   * @extends DefaultSession
-   */
-  interface Session extends DefaultSession {
-    /**
-     * The access token for the session.
-     * @type {string}
-     */
-    accessToken: string;
-
-    /**
-     * The refresh token for the session.
-     * @type {string}
-     */
-    refreshToken: string;
-
-    /**
-     * The expiration time for the access token.
-     * @type {number}
-     */
-    error?: "RefreshTokenError";
-  }
-}
 
 /**
  * Fetches a new access token using the provided refresh token and scope.
@@ -61,12 +28,12 @@ export async function getAccessToken(refreshToken: string, scope: string) {
     .then((res) => {
       return {
         accessToken: res.access_token,
-        expiresIn: Date.now() + res.expires_in * 1000,
+        expiresIn: res.expires_in,
+        expiresAt: Date.now() + res.expires_in * 1000,
         refreshToken: res.refresh_token,
       };
     });
 }
-
 
 /**
  * API handler to handle access token requests.
