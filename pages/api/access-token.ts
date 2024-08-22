@@ -67,29 +67,6 @@ export async function getAccessToken(refreshToken: string, scope: string) {
     });
 }
 
-/**
- * Fetches a new access token using the provided URL, refresh token, and scope.
- *
- * @param {[string, string, string]} params - An array containing the URL,
- * refresh token, and scope.
- * @param {string} params[0] - The URL to fetch the access token from.
- * @param {string} params[1] - The refresh token to use for obtaining a new
- * access token.
- * @param {string} params[2] - The scope for which the access token is
- * requested.
- * @returns {Promise<Object>} A promise that resolves to the response JSON
- * object.
- */
-export const accessTokenFetcher = ([url, refreshToken, scope]: [
-  string,
-  string,
-  string
-]) =>
-  fetch(url, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ refresh_token: refreshToken, scope }),
-  }).then((res) => res.json());
 
 /**
  * API handler to handle access token requests.
